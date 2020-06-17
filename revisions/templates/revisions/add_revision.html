@@ -1,0 +1,107 @@
+{% extends 'base.html'%}
+{% block content %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+<h1>Hey</h1>
+<H2><a href=""></a></H2>
+
+<h1>
+  Please make your changes</h1>
+
+
+
+
+<div class="row text-center mt-2">
+  {%if tracks%}
+  <div class="col-12">
+
+    <div class="accordion" id="accordionExample">
+
+
+      <form method="POST">
+        {{ formset.management_form }}
+        {%for form,track in formset_tracks%}
+        
+        {% csrf_token %}
+
+        <div class="card">
+          <div class="card-header" id="headingOne">
+            <h2 class="mb-0">
+              <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse{{track.id}}"
+                aria-expanded="true" aria-controls="collapse{{track.id}}">
+                {{track.name}} {{a}}
+              </button>
+            </h2>
+          </div>
+
+          <div id="collapse{{track.id}}" class="collapse hide" aria-labelledby="heading{{track.id}}"
+            data-parent="#accordionExample">
+            <div class="card-body">
+
+              <input type="hidden" name="{{form.id}}">
+              
+              {% render_field form.track value=track.id %}
+              
+              {% render_field form.project value=project %}
+
+
+              {{form.volumechange.label_tag}}
+              {{form.volumechange}}
+              <br>
+              {{form.panningposition.label_tag}}
+              {{form.panningposition}}
+              
+              <div class="row">
+                <div class="col-md-6">
+                  <p>
+
+                    <button class="btn btn-primary" type="button" data-toggle="collapse"
+                      data-target="#collapse_effects{{track.id}}" aria-expanded="false"
+                      aria-controls="collapse_effects{{track.id}}">
+                      Effects
+                    </button>
+                  </p>
+                  <div class="collapse" id="collapse_effects{{track.id}}">
+                    <div class="card card-body">
+                      {{form.distortion_changes}} </div>
+                      <div class="card card-body">
+                        {{form.reverb_changes}} </div>
+                        <div class="card card-body">
+                          {{form.delay_changes}} </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <p>
+
+                    <button class="btn btn-primary" type="button" data-toggle="collapse"
+                      data-target="#collapse_EQ{{track.id}}" aria-expanded="false"
+                      aria-controls="collapse_EQ{{track.id}}">
+                      EQ
+                    </button>
+                  </p>
+                  <div class="collapse" id="collapse_EQ{{track.id}}">
+                    <div class="card card-body">
+                      {{form.eq_high}} </div>
+                      <div class="card card-body">
+                        {{form.eq_middle}} </div>
+                        <div class="card card-body">
+                          {{form.eq_low}} </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {{form.additionalcomments}}
+          </div>
+
+        </div>
+        {%endfor%}
+        <input type="submit">
+      </form>
+
+
+    </div>
+  </div>
+
+  {%endif%}
+
+  {% endblock %}

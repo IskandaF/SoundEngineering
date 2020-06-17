@@ -1,0 +1,56 @@
+{% extends "base.html"%}
+{% block content %}
+   
+<h1>Hey, {{user.username}}</h1>
+<H2><a href=""></a></H2>
+<div class="col-md-3">
+    <h2>Your tracks</h2>
+    
+    <a href="{% url 'tracks:create' %}">Create new submission</a>
+    {%if projects%}
+    <h1>Your current projects</h1>
+    {% for project in projects %}
+    <div class="row">
+        <div class="col-md-4">
+            <a href="{% url 'revisions:add_revision' project.id%}">Add a revision</a>
+        </div>
+    <!-- Name and edit section -->
+    <div class="col-md-4">
+        <a href="{%url 'tracks:edit_project' project.id%}">{{project.name}}</a>
+        </div>
+    <!-- Delete Section -->
+    <div class="col-md-4">
+    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal{{project.id}}">
+        Delete the project
+      </button>
+      
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModal{{project.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel{{project.id}}" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel{{project.id}}">Modal title</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              Delete the project? The action is irreversible
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <a href="{%url 'tracks:delete_project' project.id%}" class="btn btn-danger">Delete</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    {% endfor %}
+    {%else%}
+    <h2>There are no projects yet :(</h2>
+    {%endif%}
+</div>
+
+
+{% endblock %}

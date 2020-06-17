@@ -1,0 +1,23 @@
+{% extends "base.html"%}
+{% block content %}
+<h1>What edits you want to make?</h1>
+<p style="color:green">{{addsuccess}}</p>
+<form method="POST">
+    
+    {% csrf_token %}
+    <h2>Project Details</h2>
+       {{projectform}}
+       <h2>Current Tracks</h2>
+       {%if tracks%}
+        {%for track in tracks %}
+        <h3>{{track}}</h3>
+        {%endfor%}
+        {%else%}
+        <h2>No tracks yet :(</h2>
+        {%endif%}
+       <h3>Add the tracks</h3>
+       {{addtrackform}}
+       <input type="submit">
+    
+</form>
+{%endblock%}

@@ -1,0 +1,11 @@
+{% extends 'base.html'%}
+{% block content %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+
+<form method="POST">
+  {{formset.management_form}}
+  {{formset|crispy}}
+</form>
+
+{% endblock %}
