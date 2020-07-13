@@ -33,17 +33,17 @@ class Message:
             message=""
         if receiver=="user":
             context_submitter={"form":form,"username":form.User.username}
-            html_message=render_to_string("revision_email.html",context_submitter)
+            message= 
 
         return message
         
     def notify(self):
-        message_user=prepare_message("user")
-        message_user=prepare_message("admin")
-        message_user=prepare_message("engineer")
+        # message_user=prepare_message("user")
+        # message_admin=prepare_message("admin")
+        # message_engineer=prepare_message("engineer")
         return send_mail(
         'Revisions',
-        self.prepare_message(),
+        "The revisions are done, come an check",
         'soulist96@yandex.ru',
         ['ifakhritdinov@gmail.com'],
         fail_silently=False,
